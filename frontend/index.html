@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-around;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            background-color: #575757;
+            border-radius: 5px;
+        }
+
+        section {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        section.active {
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#" onclick="showSection('books-section')">Books</a>
+        <a href="#" onclick="showSection('customers-section')">Customers</a>
+        <a href="#" onclick="showSection('loans-section')">Loans</a>
+    </nav>
+
+    <!-- Books Section -->
+    <section id="books-section" class="active">
+        <h2>Books</h2>
+        <div class="form-group">
+            <label for="book-title">Add New Book:</label>
+            <input type="text" id="book-title" placeholder="Enter book title">
+        </div>
+        <div class="form-group">
+            <label for="book-title">Title:</label>
+            <input type="text" id="book-title" placeholder="Enter book title">
+        </div>
+        <div class="form-group">
+            <label for="book-year">Year:</label>
+            <input type="text" id="book-year" placeholder="Enter book year">
+        </div>
+        <div class="form-group">
+            <label for="book-author">Author:</label>
+            <input type="text" id="book-author" placeholder="Enter author name">
+        </div>
+        <button onclick="addBook()">Add Book</button>
+        <button onclick="DelBook()">Delete Book</button>
+        <button onclick="UpdBook()">Update Book</button>
+        <h3>Book List:</h3>
+        <ul id="book-list"></ul>
+    </section>
+
+    <!-- Customers Section -->
+    <section id="customers-section">
+        <h2>Customers</h2>
+        <div class="form-group">
+            <label for="customer-name">Name:</label>
+            <input type="text" id="customer-name" placeholder="Enter customer name">
+        </div>
+        <div class="form-group">
+            <label for="customer-city">City:</label>
+            <input type="text" id="customer-city" placeholder="Enter customer city">
+        </div>
+        <div class="form-group">
+            <label for="customer-age">Age:</label>
+            <input type="text" id="customer-age" placeholder="Enter customer age">
+        </div>
+        <div class="form-group">
+            <label for="customer-phone">Phone Number:</label>
+            <input type="text" id="customer-phone" placeholder="Enter phone number">
+        </div>
+        <button onclick="addCustomer()">Add Customer</button>
+        <button onclick="delCustomer()">Delete Customer</button>
+        <button onclick="updCustomer()">Update Customer</button>
+
+        <h3>Customer List:</h3>
+        <ul id="customer-list"></ul>
+    </section>
+
+    <!-- Loans Section -->
+    <section id="loans-section">
+        <h2>Loans</h2>
+        <div class="form-group">
+            <label for="loan-customer">Customer Name:</label>
+            <input type="text" id="loan-customer" placeholder="Enter customer name">
+        </div>
+        <div class="form-group">
+            <label for="loan-customer">Customer ID:</label>
+            <input type="text" id="loan-customer" placeholder="Enter customer name">
+        </div>
+        <div class="form-group">
+            <label for="loan-book">Book Title:</label>
+            <input type="text" id="loan-book" placeholder="Enter book title">
+        </div>
+        <button onclick="addLoan()">Add Loan</button>
+        <button onclick="Delloan()">Delete Loan</button>
+        <button onclick="Updloan()">Update Loan</button>
+
+        <h3>Loan List:</h3>
+        <ul id="loan-list"></ul>
+    </section>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function addBook() {
+            const title = document.getElementById('book-title').value;
+            const author = document.getElementById('book-author').value;
+
+            if (title && author) {
+                const bookList = document.getElementById('book-list');
+                const li = document.createElement('li');
+                li.textContent = `Title: ${title}, Author: ${author}`;
+                bookList.appendChild(li);
+
+                document.getElementById('book-title').value = '';
+                document.getElementById('book-author').value = '';
+            }
+        }
+
+        function addCustomer() {
+            const name = document.getElementById('customer-name').value;
+            const phone = document.getElementById('customer-phone').value;
+
+            if (name && phone) {
+                const customerList = document.getElementById('customer-list');
+                const li = document.createElement('li');
+                li.textContent = `Name: ${name}, Phone: ${phone}`;
+                customerList.appendChild(li);
+
+                document.getElementById('customer-name').value = '';
+                document.getElementById('customer-phone').value = '';
+            }
+        }
+
+        function addLoan() {
+            const customer = document.getElementById('loan-customer').value;
+            const book = document.getElementById('loan-book').value;
+
+            if (customer && book) {
+                const loanList = document.getElementById('loan-list');
+                const li = document.createElement('li');
+                li.textContent = `Customer: ${customer}, Book: ${book}`;
+                loanList.appendChild(li);
+
+                document.getElementById('loan-customer').value = '';
+                document.getElementById('loan-book').value = '';
+            }
+        }
+    </script>
+</body>
+</html>
