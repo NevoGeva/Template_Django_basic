@@ -1,5 +1,3 @@
-### backend - finish
-## connect database into from - finish
-### make frontend - finish
-### connect page in html to database - not finish
-### test units - still need to be done# Template_Django_basic
+## backend- basic template for backend only need to create models and put the names in the right places
+
+## change the name of the project and put inside setting.app
